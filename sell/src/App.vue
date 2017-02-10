@@ -27,24 +27,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#app {
-	.tab {
-		display: flex;
-		width: 100%;
-		height: 40px;
-		line-height: 40px;
-		text-align: center;
-		font-size: 14px;
-		.tab-item {
-			flex: 1;
-			a {
-				display: block;
-				color: rgb(77,85,93);
-				&.active {
-					color: rgb(240,20,20);
+	#app {
+		.tab {
+			display: flex;
+			width: 100%;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			font-size: 14px;
+			.tab-item {
+				flex: 1;
+				a {
+					display: block;
+					color: rgb(77,85,93);
+					&.active {
+						color: rgb(240,20,20);
+					}
 				}
 			}
 		}
 	}
-}
 </style>
