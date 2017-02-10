@@ -10,4 +10,6 @@ new Vue({
   router,
   template: '<App/>',
   components: { App }
-})
+}).$mount('#app')
+
+router.push('/goods')
