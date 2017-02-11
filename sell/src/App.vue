@@ -16,7 +16,6 @@
   </div>
 </template>
 
-
 <script>
 import header from './components/header/header'
 export default {
@@ -27,6 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import './common/sass/index';
 	#app {
 		.tab {
 			display: flex;
@@ -35,6 +35,7 @@ export default {
 			line-height: 40px;
 			text-align: center;
 			font-size: 14px;
+			@include border-1px();
 			.tab-item {
 				flex: 1;
 				a {
