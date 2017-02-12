@@ -18,9 +18,26 @@
 
 <script>
 import header from './components/header/header'
+
+const ERR_OK = 0
+
 export default {
+  data() {
+    return {
+      seller: {}
+    }
+  },
   components: {
     'v-header': header
+  },
+  created() {
+    this.$http.get('/api/seller').then(response => {
+      this.seller = response.body
+      if (this.seller.errno !== ERR_OK) return
+      console.log(this.seller)
+    }, response => {
+      console.log('请求seller数据失败')
+    })
   }
 }
 </script>
