@@ -17,20 +17,41 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div class="supports-count" v-if="seller.supports">{{seller.supports.length+'个'}}</div>
+      <div class="supports-count" v-if="seller.supports" @click="showDetail">
+        {{seller.supports.length+'个'}}
+      </div>
     </div>
-    <div class="bulletin-wrapper">
+    <div class="bulletin-wrapper" @click="showDetail">
       <div class="bulletin-title"></div>
       <div class="bulletin-text" v-if="seller.bulletin">{{seller.bulletin}}</div>
     </div>
     <div class="background">
       <img :src="seller.avatar" width="100%" height="100%"/>
     </div>
+    <div class="detail" v-show="detailShow">
+      <div class="detail-wrapper">
+        <div class="detail-main">{{seller}}</div>
+      </div>
+      <div class="detail-close">X</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      detailShow: false
+    }
+  },
+  methods: {
+    showDetail() {
+      this.detailShow = true
+    },
+    hideDetail() {
+      this.detailShow = false
+    }
+  },
   created() {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
   },
@@ -48,6 +69,7 @@ export default {
   position: relative;
   color: #fff;
   background: rgba(7,17,27,0.5);
+  overflow: hidden;
   .content-wrapper {
     padding: 24px 12px 18px 24px;
     overflow: hidden;
@@ -163,6 +185,34 @@ export default {
     height: 100%;
     filter: blur(10px);
     z-index: -1;
+  }
+  .detail {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background: rgba(7,17,27,0.8);
+    // filter: blur(10px);
+    .detail-wrapper {
+      min-height: 100%;
+      width: 100%;
+      .detail-main {
+        margin-top: 64px;
+        padding-bottom: 64px;
+      }
+    }
+    .detail-close {
+      width: 32px;
+      height: 32px;
+      margin: -128px auto 0;
+      text-align: center;
+      line-height: 32px;
+      clear: both;
+      font-size: 32px;
+      color: rgba(255,255,255,0.5);
+    }
   }
 }
 </style>
