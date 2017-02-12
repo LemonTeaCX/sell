@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header></v-header>
+    <v-header :seller='seller'></v-header>
     <div class="tab">
     	<div class="tab-item">
 			<router-link to="/goods">商品</router-link>
@@ -18,7 +18,6 @@
 
 <script>
 import header from './components/header/header'
-
 const ERR_OK = 0
 
 export default {
@@ -32,8 +31,9 @@ export default {
   },
   created() {
     this.$http.get('/api/seller').then(response => {
-      this.seller = response.body
-      if (this.seller.errno !== ERR_OK) return
+      response = response.body
+      if (response.errno !== ERR_OK) return
+      this.seller = response.data
       console.log(this.seller)
     }, response => {
       console.log('请求seller数据失败')
