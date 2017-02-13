@@ -30,7 +30,10 @@
     </div>
     <div class="detail" v-show="detailShow">
       <div class="detail-wrapper">
-        <div class="detail-main">{{seller}}</div>
+        <div class="detail-main">
+          <h1>{{seller.name}}</h1>
+          <star :size="48" :score="seller.score"></star>
+        </div>
       </div>
       <div class="detail-close">X</div>
     </div>
@@ -38,11 +41,16 @@
 </template>
 
 <script>
+import star from 'components/star/star'
+
 export default {
   data() {
     return {
       detailShow: false
     }
+  },
+  components: {
+    star
   },
   methods: {
     showDetail() {
@@ -194,13 +202,19 @@ export default {
     width: 100%;
     height: 100%;
     background: rgba(7,17,27,0.8);
-    // filter: blur(10px);
+    backdrop-filter: blur(10px);
     .detail-wrapper {
       min-height: 100%;
       width: 100%;
       .detail-main {
         margin-top: 64px;
         padding-bottom: 64px;
+        h1 {
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 16px;
+          text-align: center;
+        }
       }
     }
     .detail-close {
