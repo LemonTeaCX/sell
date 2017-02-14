@@ -32,25 +32,45 @@
       <div class="detail-wrapper">
         <div class="detail-main">
           <h1>{{seller.name}}</h1>
-          <star :size="48" :score="seller.score"></star>
+          <star class="star" :size="48" :score="seller.score"></star>
+          <!-- <div class="title">
+            <div class="line"></div>
+            <div class="text">优惠信息</div>
+            <div class="line"></div>
+          </div> -->
+          <linetitle :tit="sale"></linetitle>
+          <ul class="supports" v-if="seller.supports">
+            <li class="support-item" v-for="item in seller.supports">
+              <span class="icon" :class="classMap[item.type]"></span>
+              <span class="text">{{item.description}}</span>
+            </li>
+          </ul>
+          <linetitle :tit="notice"></linetitle>
+          <div class="bulletin">{{seller.bulletin}}</div>
         </div>
       </div>
-      <div class="detail-close">X</div>
+      <div class="detail-close" @click="hideDetail">X</div>
     </div>
   </div>
 </template>
 
 <script>
 import star from 'components/star/star'
+import linetitle from 'components/linetitle/linetitle'
 
+const SALE_MSG = '优惠信息'
+const NOTICE = '商家公告'
 export default {
   data() {
     return {
-      detailShow: false
+      detailShow: false,
+      sale: SALE_MSG,
+      notice: NOTICE
     }
   },
   components: {
-    star
+    star,
+    linetitle
   },
   methods: {
     showDetail() {
@@ -214,6 +234,52 @@ export default {
           font-weight: 700;
           line-height: 16px;
           text-align: center;
+        }
+        .star {
+          margin-top: 12px;
+          text-align: center;
+        }
+        .supports {
+          width: 80%;
+          margin: 0 auto;
+          font-size: 12px;
+          line-height: 16px;
+          .support-item {
+            height: 16px;
+            margin-bottom: 12px;
+            .icon {
+              width: 16px;
+              height: 16px;
+              float: left;
+              background-size: 100% 100%;
+              background-repeat: no-repeat;
+              &.decrease {
+                @include bg-img('decrease_2');
+              }
+              &.discount {
+                @include bg-img('discount_2');
+              }
+              &.guarantee {
+                @include bg-img('guarantee_2');
+              }
+              &.invoice {
+                @include bg-img('invoice_2');
+              }
+              &.special {
+                @include bg-img('special_2');
+              }
+            }
+            .text {
+              float: left;
+              margin-left: 6px;
+            }
+          }
+        }
+        .bulletin {
+          width: 80%;
+          margin: 28px auto;
+          font-size: 12px;
+          line-height: 24px;
         }
       }
     }
