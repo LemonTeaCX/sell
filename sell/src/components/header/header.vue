@@ -28,29 +28,31 @@
     <div class="background">
       <img :src="seller.avatar" width="100%" height="100%"/>
     </div>
-    <div class="detail" v-show="detailShow">
-      <div class="detail-wrapper">
-        <div class="detail-main">
-          <h1>{{seller.name}}</h1>
-          <star class="star" :size="48" :score="seller.score"></star>
-          <!-- <div class="title">
-            <div class="line"></div>
-            <div class="text">优惠信息</div>
-            <div class="line"></div>
-          </div> -->
-          <linetitle :tit="sale"></linetitle>
-          <ul class="supports" v-if="seller.supports">
-            <li class="support-item" v-for="item in seller.supports">
-              <span class="icon" :class="classMap[item.type]"></span>
-              <span class="text">{{item.description}}</span>
-            </li>
-          </ul>
-          <linetitle :tit="notice"></linetitle>
-          <div class="bulletin">{{seller.bulletin}}</div>
+    <transition name = "fade">
+      <div class="detail" v-show="detailShow">
+        <div class="detail-wrapper">
+          <div class="detail-main">
+            <h1>{{seller.name}}</h1>
+            <star class="star" :size="48" :score="seller.score"></star>
+            <!-- <div class="title">
+              <div class="line"></div>
+              <div class="text">优惠信息</div>
+              <div class="line"></div>
+            </div> -->
+            <linetitle :tit="sale"></linetitle>
+            <ul class="supports" v-if="seller.supports">
+              <li class="support-item" v-for="item in seller.supports">
+                <span class="icon" :class="classMap[item.type]"></span>
+                <span class="text">{{item.description}}</span>
+              </li>
+            </ul>
+            <linetitle :tit="notice"></linetitle>
+            <div class="bulletin">{{seller.bulletin}}</div>
+          </div>
         </div>
+        <div class="detail-close" @click="hideDetail">X</div>
       </div>
-      <div class="detail-close" @click="hideDetail">X</div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -213,6 +215,12 @@ export default {
     height: 100%;
     filter: blur(10px);
     z-index: -1;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-active {
+    opacity: 0
   }
   .detail {
     position: fixed;
