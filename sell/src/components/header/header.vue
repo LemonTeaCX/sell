@@ -13,7 +13,7 @@
           {{seller.description + '/' + seller.deliveryTime + '分钟送达'}}
         </div>
         <div v-if="seller.supports" class="supports">
-          <span class="icon" :class="classMap[seller.supports[0].type]"></span>
+          <icon :type="seller.supports[0].type" :num="1"></icon>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
@@ -42,7 +42,7 @@
             <linetitle :tit="sale"></linetitle>
             <ul class="supports" v-if="seller.supports">
               <li class="support-item" v-for="item in seller.supports">
-                <span class="icon" :class="classMap[item.type]"></span>
+                <icon :type="item.type" :num="2"></icon>
                 <span class="text">{{item.description}}</span>
               </li>
             </ul>
@@ -59,6 +59,7 @@
 <script>
 import star from 'components/star/star'
 import linetitle from 'components/linetitle/linetitle'
+import icon from 'components/icon/icon'
 
 const SALE_MSG = '优惠信息'
 const NOTICE = '商家公告'
@@ -72,7 +73,8 @@ export default {
   },
   components: {
     star,
-    linetitle
+    linetitle,
+    icon
   },
   methods: {
     showDetail() {
@@ -140,28 +142,6 @@ export default {
       }
       .supports {
         overflow: hidden;
-        .icon {
-          float: left;
-          width: 12px;
-          height: 12px;
-          &.decrease {
-              @include bg-img ('decrease_1')
-          }
-          &.discount {
-              @include bg-img ('discount_1')
-          }
-          &.guarantee {
-              @include bg-img ('guarantee_1')
-          }
-          &.invoice {
-              @include bg-img ('invoice_1')
-          }
-          &.special {
-              @include bg-img ('special_1')
-          }
-          background-size: 12px 12px;
-          background-repeat: no-repeat;
-        }
         .text {
           float: left;
           margin-left: 8px;
@@ -255,28 +235,6 @@ export default {
           .support-item {
             height: 16px;
             margin-bottom: 12px;
-            .icon {
-              width: 16px;
-              height: 16px;
-              float: left;
-              background-size: 100% 100%;
-              background-repeat: no-repeat;
-              &.decrease {
-                @include bg-img('decrease_2');
-              }
-              &.discount {
-                @include bg-img('discount_2');
-              }
-              &.guarantee {
-                @include bg-img('guarantee_2');
-              }
-              &.invoice {
-                @include bg-img('invoice_2');
-              }
-              &.special {
-                @include bg-img('special_2');
-              }
-            }
             .text {
               float: left;
               margin-left: 6px;
