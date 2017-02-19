@@ -4,7 +4,7 @@
       <ul class="menu">
         <li class="menu-item" v-for="goodsItem in goods">
           <span class="text">
-            <span class="icon"></span>
+            <icon v-if="goodsItem.type !== -1" class="icon" :type="goodsItem.type" :num="3"></icon>
             {{goodsItem.name}}
           </span>
         </li>
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import icon from 'components/icon/icon'
+
 const ERR_OK = 0
 export default {
   data() {
@@ -31,11 +33,16 @@ export default {
     }, response => {
       console.log('请求goods数据失败')
     })
+    this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  },
+  components: {
+    icon
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import "../../common/sass/mixin.scss";
 .goods {
   display: flex;
   width: 100%;
@@ -46,16 +53,17 @@ export default {
     flex: 0 0 80px;
     font-size: 12px;
     .menu-item {
+      display: table;
+      width: 56px;
       height: 54px;
-      background: #f3f5f7;
       padding: 0 12px;
-      text-align: center;
-      color: rgb(77,85,93);
+      background: #f3f5f7;
       .text {
-        height: 32px;
-        padding-top: 20px;
+        text-align: center;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
         border-bottom: 1px solid rgba(7,17,27,0.1);
-        display: block;
       }
     }
   }
