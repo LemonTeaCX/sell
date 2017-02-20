@@ -10,7 +10,32 @@
         </li>
       </ul>
     </div>
-    <div class="foods-wrapper"></div>
+    <div class="foods-wrapper">
+      <ul>
+        <li class="foods-list" v-for="list in goods">
+          <h1>{{list.name}}</h1>
+          <ul>
+            <li class="foods-item" v-for="foods in list.foods">
+              <div class="foods-icon">
+                <img :src="foods.icon" width="57" height="57">
+              </div>
+              <div class="content">
+                <h2>{{foods.name}}</h2>
+                <p class="foods-description" v-show="foods.description">{{foods.description}}</p>
+                <div class="sell-info">
+                  <span class="sellCount">月售{{foods.sellCount}}份</span>
+                  <span class="rating">好评率{{foods.rating}}</span>
+                </div>
+                <div class="sell-price">
+                  <span class="price">￥<span class="num">{{foods.price}}</span></span>
+                  <span v-show="foods.oldPrice" class="oldPrice">￥{{foods.oldPrice}}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -49,6 +74,7 @@ export default {
   position: absolute;
   top: 174px;
   bottom: 46px;
+  overflow: hidden;
   .menu-wrapper {
     flex: 0 0 80px;
     font-size: 12px;
@@ -69,7 +95,61 @@ export default {
   }
   .foods-wrapper {
     flex: 1;
-    background: green;
+    h1 {
+      height: 26px;
+      padding-left: 12px;
+      background: #f3f5f7;
+      border-left: 2px solid #d9dde1;
+      line-height: 26px;
+      font-size: 12px;
+      color: rgb(147,153,159);
+    }
+    .foods-item {
+      background: #fff;
+      padding: 18px 0;
+      margin: 0 18px;
+      display: flex;
+      border-bottom: 1px solid rgba(7,17,27,0.1);
+      &:last-child {
+        border: none;
+      }
+      .foods-icon {
+        flex: 0,0,57px;
+      }
+      .content {
+        flex: 1;
+        padding-left: 10px;
+        font-size: 10px;
+        line-height: 10px;
+        color: rgb(147,153,159);
+        h2 {
+          margin-top: 2px;
+          font-size: 14px;
+          line-height: 14px;
+          color: rgb(7,17,27);
+        }
+        .foods-description {
+          margin-top: 8px;
+        }
+        .sell-info {
+          margin-top: 8px;
+        }
+        .sell-price {
+          margin-top: 8px;
+          line-height: 24px;
+          font-weight: normal/700;
+          .price {
+            color: red;
+            .num {
+              font-size: 14px;
+            }
+          }
+          .oldPrice {
+            text-decoration: line-through;
+          }
+        }
+      }
+    }
   }
 }
 </style>
