@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-    <div class="menu-wrapper">
+    <div class="menu-wrapper" ref="menuWrapper">
       <ul class="menu">
         <li class="menu-item" v-for="goodsItem in goods">
           <span class="text">
@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-    <div class="foods-wrapper">
+    <div class="foods-wrapper" ref="foodsWrapper">
       <ul>
         <li class="foods-list" v-for="list in goods">
           <h1>{{list.name}}</h1>
@@ -41,6 +41,7 @@
 
 <script>
 import icon from 'components/icon/icon'
+import BScroll from 'better-scroll'
 
 const ERR_OK = 0
 export default {
@@ -55,6 +56,9 @@ export default {
       if (response.errno !== ERR_OK) return
       this.goods = response.data
       console.log(this.goods)
+      this.$nextTick(() => {
+        this._initScroll()
+      })
     }, response => {
       console.log('请求goods数据失败')
     })
@@ -62,6 +66,12 @@ export default {
   },
   components: {
     icon
+  },
+  methods: {
+    _initScroll() {
+      this.menuScroll = new BScroll(this.$refs.menuWrapper, {})
+      this.foodScroll = new BScroll(this.$refs.foodsWrapper, {})
+    }
   }
 }
 </script>
