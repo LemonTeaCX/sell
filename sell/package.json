@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "vue": "^2.1.10",
-    "vue-router": "^2.2.0"
+    "vue-router": "^2.2.0",
+    "vue-resource": "^1.2.0",
+    "better-scroll": "^0.1.10"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
@@ -47,7 +49,6 @@
     "shelljs": "^0.7.6",
     "url-loader": "^0.5.7",
     "vue-loader": "^10.3.0",
-    "vue-resource": "^1.2.0",
     "vue-style-loader": "^2.0.0",
     "vue-template-compiler": "^2.1.10",
     "webpack": "^2.2.1",
