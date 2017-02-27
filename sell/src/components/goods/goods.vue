@@ -2,7 +2,7 @@
   <div class="goods">
     <div class="menu-wrapper" ref="menuWrapper">
       <ul class="menu">
-        <li class="menu-item" v-for="goodsItem in goods">
+        <li class="menu-item" :class="{'current':currentIndex===index}" v-for="(goodsItem,index) in goods" @click="menuClick(index,$event)">
           <span class="text">
             <icon v-if="goodsItem.type !== -1" class="icon" :type="goodsItem.type" :num="3"></icon>
             {{goodsItem.name}}
@@ -12,7 +12,7 @@
     </div>
     <div class="foods-wrapper" ref="foodsWrapper">
       <ul>
-        <li class="foods-list" v-for="list in goods">
+        <li class="foods-list foods-list-hook" v-for="list in goods">
           <h1>{{list.name}}</h1>
           <ul>
             <li class="foods-item" v-for="foods in list.foods">
@@ -47,7 +47,9 @@ const ERR_OK = 0
 export default {
   data() {
     return {
-      goods: ''
+      goods: [],
+      listHeight: [],
+      scrollY: 0
     }
   },
   created() {
@@ -58,6 +60,7 @@ export default {
       console.log(this.goods)
       this.$nextTick(() => {
         this._initScroll()
+        this._calculateHeight()
       })
     }, response => {
       console.log('请求goods数据失败')
@@ -69,8 +72,40 @@ export default {
   },
   methods: {
     _initScroll() {
-      this.menuScroll = new BScroll(this.$refs.menuWrapper, {})
-      this.foodScroll = new BScroll(this.$refs.foodsWrapper, {})
+      this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true
+      })
+      this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+        probeType: 3
+      })
+      this.foodsScroll.on('scroll', (pos) => {
+        this.scrollY = Math.abs(Math.round(pos.y))
+      })
+    },
+    _calculateHeight() {
+      let foodsList = this.$refs.foodsWrapper.getElementsByClassName('foods-list-hook')
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0; i < foodsList.length; i++) {
+        height += foodsList[i].clientHeight
+        this.listHeight.push(height)
+      }
+    },
+    menuClick(index, event) {
+      if (!event._constructed) {
+        return
+      }
+      this.foodsScroll.scrollTo(0, -this.listHeight[index], 300)
+    }
+  },
+  computed: {
+    currentIndex() {
+      for (let i = 0; i < this.listHeight.length; i++) {
+        if (!this.listHeight[i + 1] || (this.scrollY >= this.listHeight[i] && this.scrollY < this.listHeight[i + 1])) {
+          return i
+        }
+      }
+      return 0
     }
   }
 }
@@ -94,6 +129,13 @@ export default {
       height: 54px;
       padding: 0 12px;
       background: #f3f5f7;
+      &.current {
+        position: relative;
+        z-index: 10;
+        margin-top: -1px;
+        background: #fff;
+        font-weight: 700;
+      }
       .text {
         text-align: center;
         vertical-align: middle;
