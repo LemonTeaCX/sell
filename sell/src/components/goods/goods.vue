@@ -36,12 +36,14 @@
         </li>
       </ul>
     </div>
+    <shopcart></shopcart>
   </div>
 </template>
 
 <script>
 import icon from 'components/icon/icon'
 import BScroll from 'better-scroll'
+import shopcart from 'components/shopcart/shopcart'
 
 const ERR_OK = 0
 export default {
@@ -68,7 +70,8 @@ export default {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
   },
   components: {
-    icon
+    icon,
+    shopcart
   },
   methods: {
     _initScroll() {
@@ -135,6 +138,9 @@ export default {
         margin-top: -1px;
         background: #fff;
         font-weight: 700;
+        .text {
+          border: none;
+        }
       }
       .text {
         text-align: center;

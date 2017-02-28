@@ -34,11 +34,6 @@
           <div class="detail-main">
             <h1>{{seller.name}}</h1>
             <star class="star" :size="48" :score="seller.score"></star>
-            <!-- <div class="title">
-              <div class="line"></div>
-              <div class="text">优惠信息</div>
-              <div class="line"></div>
-            </div> -->
             <linetitle :tit="sale"></linetitle>
             <ul class="supports" v-if="seller.supports">
               <li class="support-item" v-for="item in seller.supports">
@@ -50,7 +45,7 @@
             <div class="bulletin">{{seller.bulletin}}</div>
           </div>
         </div>
-        <div class="detail-close" @click="hideDetail">X</div>
+        <div class="detail-close" @click="hideDetail"><i class="iconfont">&#xe65d;</i></div>
       </div>
     </transition>
   </div>

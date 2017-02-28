@@ -1,5 +1,5 @@
 <template>
-  <span class="icon" :class="classMap[type]"></span>
+  <span class="iconImg" :class="classMap[type]"></span>
 </template>
 
 <script>
@@ -21,7 +21,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../common/sass/mixin.scss";
 
-.icon {
+.iconImg {
   float: left;
   width: 12px;
   height: 12px;
