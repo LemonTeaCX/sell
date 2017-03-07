@@ -39,7 +39,7 @@
         </li>
       </ul>
     </div>
-    <shopcart :selectFoods="selectFoods"></shopcart>
+    <shopcart :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
   </div>
 </template>
 
@@ -56,6 +56,11 @@ export default {
       goods: [],
       listHeight: [],
       scrollY: 0
+    }
+  },
+  props: {
+    seller: {
+      type: Object
     }
   },
   created() {
