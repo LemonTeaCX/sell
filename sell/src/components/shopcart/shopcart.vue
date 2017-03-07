@@ -3,7 +3,7 @@
     <div class="content">
       <div class="content-left">
         <div class="logo-wrap">
-          <div class="logo" :class="{'has-food':totalCount}">
+          <div class="logo" :class="{'has-food':totalCount}" @click="test">
             <i class="iconfont">&#xe611;</i>
           </div>
           <div class="count" v-show="totalCount">{{totalCount}}</div>
@@ -21,6 +21,11 @@
 
 <script>
 export default {
+  methods: {
+    test() {
+      alert(1)
+    }
+  },
   props: {
     selectFoods: {
       type: Array,

@@ -31,12 +31,15 @@
                   <span v-show="foods.oldPrice" class="oldPrice">￥{{foods.oldPrice}}</span>
                 </div>
               </div>
+              <div class="cartball-wrapper">
+                <cartball :food="foods"></cartball>
+              </div>
             </li>
           </ul>
         </li>
       </ul>
     </div>
-    <shopcart></shopcart>
+    <shopcart :selectFoods="selectFoods"></shopcart>
   </div>
 </template>
 
@@ -44,6 +47,7 @@
 import icon from 'components/icon/icon'
 import BScroll from 'better-scroll'
 import shopcart from 'components/shopcart/shopcart'
+import cartball from 'components/cartball/cartball'
 
 const ERR_OK = 0
 export default {
@@ -71,7 +75,8 @@ export default {
   },
   components: {
     icon,
-    shopcart
+    shopcart,
+    cartball
   },
   methods: {
     _initScroll() {
@@ -79,7 +84,8 @@ export default {
         click: true
       })
       this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
-        probeType: 3
+        probeType: 3,
+        click: true
       })
       this.foodsScroll.on('scroll', (pos) => {
         this.scrollY = Math.abs(Math.round(pos.y))
@@ -109,6 +115,18 @@ export default {
         }
       }
       return 0
+    },
+    selectFoods() {
+      let foods = []
+      this.goods.forEach(good => {
+        good.foods.forEach(food => {
+          // food.count = 0
+          if (food.count) {
+            foods.push(food)
+          }
+        })
+      })
+      return foods
     }
   }
 }
@@ -168,6 +186,7 @@ export default {
       margin: 0 18px;
       display: flex;
       border-bottom: 1px solid rgba(7,17,27,0.1);
+      position: relative;
       &:last-child {
         border: none;
       }
@@ -206,6 +225,11 @@ export default {
             text-decoration: line-through;
           }
         }
+      }
+      .cartball-wrapper {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
       }
     }
   }
