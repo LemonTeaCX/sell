@@ -1,10 +1,12 @@
 <template>
   <div class="cartball">
-    <div class="decrease" v-show="food.count > 0" @click="decrease">
-      <i class="iconfont">&#xe615;</i>
-    </div>
+    <transition name="slide-fade">
+      <div class="decrease" v-show="food.count > 0" @click="decrease($event)">
+        <i class="iconfont">&#xe615;</i>
+      </div>
+    </transition>
     <div class="count" v-show="food.count > 0">{{food.count}}</div>
-    <div class="add" @click="add">
+    <div class="add" @click="add($event)">
       <i class="iconfont">&#xe748;</i>
     </div>
   </div>
@@ -20,17 +22,21 @@ export default {
     }
   },
   methods: {
-    add() {
+    add(event) {
+      if (!event._constructed) {
+        return
+      }
       if (!this.food.count) {
-        // this.food.count = 0
         Vue.set(this.food, 'count', 0)
       }
       this.food.count ++
-      console.log(this.food.count)
+      this.$parent.$emit('ball-click', event.target)
     },
-    decrease() {
+    decrease(event) {
+      if (!event._constructed || !this.food.count) {
+        return
+      }
       this.food.count --
-      console.log(this.food.count)
     }
   }
 }
@@ -38,6 +44,16 @@ export default {
 
 <style lang="scss" scoped>
 .cartball {
+  .slide-fade-enter-active {
+    transition: all .7s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .7s ease;
+  }
+  .slide-fade-enter, .slide-fade-leave-active {
+    // transform: translateX(10px);
+    opacity: 0;
+  }
   width: 64px;
   height: 27px;
   line-height: 20px;
